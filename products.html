@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MonkeyArt - Shop Products</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #FFF8F0;
+            color: #333333;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #FFD700 0%, #FF6347 100%);
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-links a:hover {
+            transform: scale(1.1);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: #FF6347;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: linear-gradient(135deg, #FFD700 0%, #FF6347 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .disclaimer p {
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .disclaimer strong {
+            font-weight: 600;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-in;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .placeholder-image {
+            font-size: 4rem;
+            color: #FFD700;
+        }
+
+        .product-info {
+            padding: 1.25rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FF6347;
+            margin-bottom: 1rem;
+        }
+
+        .order-button {
+            background-color: #1E90FF;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .order-button:hover {
+            background-color: #FF6347;
+            transform: scale(1.02);
+        }
+
+        /* Category Filter */
+        .filter-section {
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .filter-btn {
+            background: white;
+            color: #333;
+            padding: 0.6rem 1.5rem;
+            border: 2px solid #FFD700;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover {
+            background: #FFD700;
+            transform: scale(1.05);
+        }
+
+        .filter-btn.active {
+            background: #FF6347;
+            color: white;
+            border-color: #FF6347;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #333333 0%, #555555 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #FFD700;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: #FF6347;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive - Desktop (4 columns) */
+        @media (min-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+            }
+
+            .product-image-container {
+                height: 220px;
+            }
+
+            .product-card h3 {
+                font-size: 1.15rem;
+            }
+        }
+
+        /* Tablet (3 columns) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 767px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .product-price {
+                font-size: 1.3rem;
+            }
+
+            .disclaimer {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 380px) {
+            .products-grid {
+                gap: 1rem;
+            }
+
+            .product-info {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🎨 MonkeyArt</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>🛍️ Our Products</h1>
+            <p>Browse our collection of coloring books and art supplies</p>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <p>
+                <strong>⚠️ Note:</strong> Prices shown do not include delivery fees. 
+                Delivery charges may vary based on distance from our location.
+            </p>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-section">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+                <button class="filter-btn" onclick="filterProducts('kids')">Kids Books</button>
+                <button class="filter-btn" onclick="filterProducts('adult')">Adult Books</button>
+                <button class="filter-btn" onclick="filterProducts('supplies')">Art Supplies</button>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+            <!-- Product 1 -->
+            <div class="product-card" data-category="kids">
+                <div class="product-image-container">
+                    <div class="placeholder-image">📚</div>
+                    <!-- Replace with: <img src="your-image-url.jpg" alt="Product name"> -->
+                </div>
+                <div class="product-info">
+                    <h3>Kids Adventure Coloring Book</h3>
+                    <p class="product-description">48 pages of fun illustrations perfect for ages 4-10</p>
+                    <div class="product-price">KSh 350</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Kids Adventure Coloring Book (KSh 350)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" data-category="kids">
+                <div class="product-image-container">
+                    <div class="placeholder-image">🦄</div>
+                </div>
+                <div class="product-info">
+                    <h3>Unicorn Dreams Book</h3>
+                    <p class="product-description">Magical unicorn scenes for creative kids</p>
+                    <div class="product-price">KSh 400</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Unicorn Dreams Book (KSh 400)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card" data-category="adult">
+                <div class="product-image-container">
+                    <div class="placeholder-image">🌸</div>
+                </div>
+                <div class="product-info">
+                    <h3>Mandala Collection</h3>
+                    <p class="product-description">50 intricate designs for relaxation</p>
+                    <div class="product-price">KSh 500</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Mandala Collection (KSh 500)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card" data-category="adult">
+                <div class="product-image-container">
+                    <div class="placeholder-image">🌿</div>
+                </div>
+                <div class="product-info">
+                    <h3>Nature & Gardens</h3>
+                    <p class="product-description">Beautiful botanical illustrations</p>
+                    <div class="product-price">KSh 550</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Nature & Gardens (KSh 550)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card" data-category="supplies">
+                <div class="product-image-container">
+                    <div class="placeholder-image">🎨</div>
+                </div>
+                <div class="product-info">
+                    <h3>Watercolor Set</h3>
+                    <p class="product-description">24 vibrant colors with 3 brushes</p>
+                    <div class="product-price">KSh 800</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Watercolor Set (KSh 800)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card" data-category="supplies">
+                <div class="product-image-container">
+                    <div class="placeholder-image">✏️</div>
+                </div>
+                <div class="product-info">
+                    <h3>Sketching Pencil Set</h3>
+                    <p class="product-description">12 professional grade pencils (2H-8B)</p>
+                    <div class="product-price">KSh 650</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Sketching Pencil Set (KSh 650)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product-card" data-category="supplies">
+                <div class="product-image-container">
+                    <div class="placeholder-image">🖍️</div>
+                </div>
+                <div class="product-info">
+                    <h3>Crayon Mega Pack</h3>
+                    <p class="product-description">48 colors in durable storage box</p>
+                    <div class="product-price">KSh 450</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Crayon Mega Pack (KSh 450)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product-card" data-category="kids">
+                <div class="product-image-container">
+                    <img src="wolf.png">
+                </div>
+                <div class="product-info">
+                    <h3>Dinosaur World Book</h3>
+                    <p class="product-description">Educational dinosaur scenes for kids</p>
+                    <div class="product-price">KSh 380</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Dinosaur World Book (KSh 380)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 9 -->
+            <div class="product-card" data-category="supplies">
+                <div class="product-image-container">
+                    <div class="placeholder-image">📓</div>
+                </div>
+                <div class="product-info">
+                    <h3>Sketch Pad A4</h3>
+                    <p class="product-description">100 sheets of quality drawing paper</p>
+                    <div class="product-price">KSh 300</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Sketch Pad A4 (KSh 300)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 10 -->
+            <div class="product-card" data-category="adult">
+                <div class="product-image-container">
+                    <div class="placeholder-image">🎭</div>
+                </div>
+                <div class="product-info">
+                    <h3>Zen Patterns Book</h3>
+                    <p class="product-description">Mindful coloring for stress relief</p>
+                    <div class="product-price">KSh 520</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Zen Patterns Book (KSh 520)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 11 -->
+            <div class="product-card" data-category="supplies">
+                <div class="product-image-container">
+                    <div class="placeholder-image">🖌️</div>
+                </div>
+                <div class="product-info">
+                    <h3>Acrylic Paint Set</h3>
+                    <p class="product-description">12 tubes of quality acrylic paint</p>
+                    <div class="product-price">KSh 1200</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Acrylic Paint Set (KSh 1200)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 12 -->
+            <div class="product-card" data-category="kids">
+                <div class="product-image-container">
+                    <div class="placeholder-image">🐻</div>
+                </div>
+                <div class="product-info">
+                    <h3>Animal Friends Book</h3>
+                    <p class="product-description">Cute animals for little artists</p>
+                    <div class="product-price">KSh 350</div>
+                    <a href="https://wa.me/YOURNUMBER?text=Hi! I'd like to order: Animal Friends Book (KSh 350)" class="order-button">
+                        📱 Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 MonkeyArt | Made with ❤️ | WhatsApp Orders Available</p>
+        <div class="social-links">
+            <a href="#" title="Facebook">📘</a>
+            <a href="#" title="Instagram">📷</a>
+            <a href="#" title="Twitter">🐦</a>
+        </div>
+    </footer>
+
+    <script>
+        function filterProducts(category) {
+            const cards = document.querySelectorAll('.product-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter products
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                    card.style.animation = 'fadeIn 0.5s ease-in';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
